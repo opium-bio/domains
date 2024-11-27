@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "crates/core"
+]
+
+# Optional: Shared dependencies for the entire workspace
+[workspace.dependencies]
+rocket = "0.5.1"
