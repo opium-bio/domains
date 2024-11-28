@@ -8,8 +8,6 @@ High-performance domain control service built with Rust and Redis.
 
 - Fast domain registration
 - Redis-powered storage
-- Concurrent management
-- Scalable microservice architecture
 
 ## Prerequisites
 
@@ -20,7 +18,7 @@ High-performance domain control service built with Rust and Redis.
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/domains.git
+git clone https://github.com/opium-bio/domains.git 
 cd domains
 cargo build --release
 ```
