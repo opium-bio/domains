@@ -1,11 +1,10 @@
+[app]
+port = 3000
+
 statuses = [
     "expired",
     "online",
-    "inactive",
     "pending",
-    "suspended",
-    "error",
-    "unverified"
 ]
 
 [cloudflare]
@@ -15,3 +14,6 @@ cf_apikey = ""
 hostname = ""
 port = 6379
 password = ""
+
+[mongodb]
+string = ""
