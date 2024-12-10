@@ -1,0 +1,17 @@
+statuses = [
+    "expired",
+    "online",
+    "inactive",
+    "pending",
+    "suspended",
+    "error",
+    "unverified"
+]
+
+[cloudflare]
+cf_apikey = ""
+
+[redis]
+hostname = ""
+port = 6379
+password = ""
