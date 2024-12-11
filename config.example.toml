@@ -7,6 +7,9 @@ statuses = [
     "pending",
 ]
 
+[JWT]
+secret = ""
+
 [cloudflare]
 cf_apikey = ""
 

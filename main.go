@@ -27,6 +27,11 @@ func main() {
 			"meow": "🐱",
 		})
 	})
+	v1.Get("/checkdomain", func(c fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"meow": "🐱",
+		})
+	})
 	address := fmt.Sprintf(":%d", cfg.App.Port)
 	log.Fatal(app.Listen(address))
 }
