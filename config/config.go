@@ -3,8 +3,6 @@ package config
 import (
 	"github.com/BurntSushi/toml"
 )
-
-// Config holds the structure of the TOML configuration
 type Config struct {
 	App        App        `toml:"app"`
 	Statuses   []string   `toml:"statuses"`
