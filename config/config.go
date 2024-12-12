@@ -25,6 +25,7 @@ type MongoDB struct {
 	String string `toml:"string"`
 }
 
+
 func LoadConfig(filepath string) (*Config, error) {
 	var config Config
 	if _, err := toml.DecodeFile(filepath, &config); err != nil {
@@ -32,3 +33,4 @@ func LoadConfig(filepath string) (*Config, error) {
 	}
 	return &config, nil
 }
+
