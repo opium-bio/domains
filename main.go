@@ -1,8 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/opium-bio/config"
@@ -17,7 +19,15 @@ func main() {
 	cfg, err := config.LoadConfig("./config.toml")
 	if err != nil {
 		log.Fatalf("Error loading config: %v", err)
+		os.Exit(3)
 	}
+	db := lib.MongoDB()
+	defer func() {
+		if err := db.Disconnect(context.TODO()); err != nil {
+			log.Fatalf("Error disconnecting MongoDB: %v", err)
+			os.Exit(3)
+		}
+	}()
 
 	fmt.Printf("Config loaded: %+v\n", cfg)
 	app := fiber.New()
@@ -41,15 +51,9 @@ func main() {
 				"message": "Domain cannot be empty",
 			})
 		}
-		if !lib.ValidateTld(domain.Domain) {
-			return c.JSON(fiber.Map{
-				"success": false,
-				"message": "Invalid domain format or TLD",
-			})
-		}
 		return c.JSON(fiber.Map{
-			"meow":   "🐱",
-			"domain": domain.Domain,
+			"success": true,
+			"domain":  domain.Domain,
 		})
 	})
 	v1.Get("/checkdomain", func(c fiber.Ctx) error {

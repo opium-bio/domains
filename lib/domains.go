@@ -3,7 +3,14 @@ package lib
 import "strings"
 
 var tlds = []string{
-	"com", "net", "org", "lol", "io", "dev",
+	"com", "net", "org", "io", "dev",
+	"lol", "fun", "online", "shop",
+	"xyz", "site", "space", "life",
+	"world", "click", "link", "today",
+	"expert", "agency", "enterprises",
+	"pics", "media", "love", "rip",
+	"host", "rocks", "gold",
+	"systems", "group", "pro",
 }
 
 func ValidateTld(domain string) bool {
@@ -17,6 +24,5 @@ func ValidateTld(domain string) bool {
 			return true
 		}
 	}
-
 	return false
 }
