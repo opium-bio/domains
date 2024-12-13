@@ -28,14 +28,20 @@ func main() {
 			os.Exit(3)
 		}
 	}()
-
-	fmt.Printf("Config loaded: %+v\n", cfg)
+	lib.CloudFlare(cfg.Cloudflare.CFApiKey)
+	defer func() {
+		log.Fatalf("Error: %v", err)
+		os.Exit(3)
+	}()
 	app := fiber.New()
 	v1 := app.Group("/v1")
 	v1.Get("/", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"meow": "🐱",
 		})
+	})
+	v1.Get("/domains", func(c fiber.Ctx) error {
+		return c.JSON(fiber.Map{})
 	})
 	v1.Post("/add", func(c fiber.Ctx) error {
 		domain := new(Domain)

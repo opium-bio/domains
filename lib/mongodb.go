@@ -32,7 +32,7 @@ func MongoDB() *mongo.Client {
 			log.Fatalf("Error pinging MongoDB: %v", err)
 		}
 
-		log.Println("MongoDB connection established successfully")
+		log.Printf("MongoDB connection established successfully")
 		clientInstance = client
 	})
 
