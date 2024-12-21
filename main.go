@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/opium-bio/config"
 	"github.com/opium-bio/lib"
+	"github.com/opium-bio/utils"
 )
 
 type Domain struct {
@@ -24,8 +25,7 @@ func main() {
 	db := lib.MongoDB()
 	defer func() {
 		if err := db.Disconnect(context.TODO()); err != nil {
-			log.Fatalf("Error disconnecting MongoDB: %v", err)
-			os.Exit(3)
+			utils.Error("Error disconnecting MongoDB", true)
 		}
 	}()
 	lib.CloudFlare(cfg.Cloudflare.CFApiKey)

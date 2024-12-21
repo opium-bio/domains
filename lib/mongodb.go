@@ -2,11 +2,11 @@ package lib
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"sync"
 
 	"github.com/opium-bio/config"
+	"github.com/opium-bio/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -26,19 +26,19 @@ func MongoDB() *mongo.Client {
 		clientOptions := options.Client().ApplyURI(cfg.MongoDB.String)
 		client, err := mongo.Connect(context.TODO(), clientOptions)
 		if err != nil {
-			log.Fatalf("Error connecting to MongoDB: %v", err)
+			utils.Error("Error connecting to MongoDB", true)
 		}
 		err = client.Ping(context.TODO(), nil)
 		if err != nil {
-			log.Fatalf("Error pinging MongoDB: %v", err)
+			utils.Log("Error pinging MongoDB: %v")
 		}
 
-		fmt.Print("MongoDB connection established successfully")
+		utils.Log("MongoDB connection established successfully")
 		clientInstance = client
 	})
 
 	if clientInstanceErr != nil {
-		log.Fatalf("MongoDB client initialization error: %v", clientInstanceErr)
+		utils.Error("MongoDB client initialization error", true)
 	}
 
 	return clientInstance
