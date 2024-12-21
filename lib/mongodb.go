@@ -2,6 +2,7 @@ package lib
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sync"
 
@@ -32,7 +33,7 @@ func MongoDB() *mongo.Client {
 			log.Fatalf("Error pinging MongoDB: %v", err)
 		}
 
-		log.Printf("MongoDB connection established successfully")
+		fmt.Print("MongoDB connection established successfully")
 		clientInstance = client
 	})
 
