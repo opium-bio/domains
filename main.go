@@ -16,12 +16,6 @@ type Domain struct {
 	Domain string `json:"domain"`
 }
 
-type APIResponse struct {
-	Success bool   `json:"success"`
-	Message string `json:"message,omitempty"`
-	Domain  string `json:"domain,omitempty"`
-}
-
 func main() {
 	cfg, err := config.LoadConfig("./config.toml")
 	if err != nil {
@@ -63,16 +57,16 @@ func main() {
 	v1.Post("/add", func(c fiber.Ctx) error {
 		domain := new(Domain)
 		if err := c.Bind().Body(domain); err != nil {
-			return c.JSON(APIResponse{
-				Success: false,
-				Message: "Invalid request body: " + err.Error(),
+			return c.JSON(fiber.Map{
+				"success": false,
+				"message": "Invalid request body: " + err.Error(),
 			})
 		}
 
 		if domain.Domain == "" {
-			return c.JSON(APIResponse{
-				Success: false,
-				Message: "Domain cannot be empty",
+			return c.JSON(fiber.Map{
+				"success": false,
+				"message": "Domain cannot be empty",
 			})
 		}
 
@@ -103,9 +97,9 @@ func main() {
 			})
 		}
 
-		return c.JSON(APIResponse{
-			Success: true,
-			Domain:  domain.Domain,
+		return c.JSON(fiber.Map{
+			"success": true,
+			"domain":  domain.Domain,
 		})
 	})
 
