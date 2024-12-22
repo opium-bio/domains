@@ -2,7 +2,6 @@ package lib
 
 import (
 	"context"
-	"log"
 	"sync"
 
 	"github.com/opium-bio/config"
@@ -21,7 +20,7 @@ func MongoDB() *mongo.Client {
 	mongoOnce.Do(func() {
 		cfg, err := config.LoadConfig("./config.toml")
 		if err != nil {
-			log.Fatalf("Error loading config: %v", err)
+			utils.Error("Error loading config", true)
 		}
 		clientOptions := options.Client().ApplyURI(cfg.MongoDB.String)
 		client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -30,10 +29,10 @@ func MongoDB() *mongo.Client {
 		}
 		err = client.Ping(context.TODO(), nil)
 		if err != nil {
-			utils.Log("Error pinging MongoDB: %v")
+			utils.Error("Error pinging MongoDB", true)
 		}
 
-		utils.Log("MongoDB connection established successfully")
+		utils.Log("Successfully connected to Mongodb!")
 		clientInstance = client
 	})
 

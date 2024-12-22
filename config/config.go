@@ -16,10 +16,11 @@ type App struct {
 	Port int `toml:"port"`
 }
 type JWT struct {
-	secret string `toml:"secret"`
+	Secret string `toml:"secret"`
 }
 type Cloudflare struct {
-	CFApiKey string `toml:"cf_apikey"`
+	CFApiKey  string `toml:"cf_apikey"`
+	CFAccount string `toml:"account_id"`
 }
 type Redis struct {
 	Hostname string `toml:"hostname"`

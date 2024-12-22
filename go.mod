@@ -5,11 +5,14 @@ go 1.23.4
 require (
 	github.com/BurntSushi/toml v1.4.0
 	github.com/gofiber/fiber/v3 v3.0.0-beta.3
+	github.com/redis/go-redis/v9 v9.7.0
 	go.mongodb.org/mongo-driver v1.17.1
 )
 
 require (
 	github.com/andybalholm/brotli v1.1.1 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gofiber/utils/v2 v2.0.0-beta.7 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect

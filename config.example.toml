@@ -12,6 +12,7 @@ secret = ""
 
 [cloudflare]
 cf_apikey = ""
+account_id = ""
 
 [redis]
 hostname = ""

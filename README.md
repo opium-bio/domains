@@ -2,7 +2,7 @@
 
 ## Overview
 
-High-performance domain control service built with Rust and Redis.
+High-performance domain control service built with Golang and Redis.
 
 ## Features
 
@@ -12,7 +12,6 @@ High-performance domain control service built with Rust and Redis.
 ## Prerequisites
 
 - Go
-- Rust
 - Redis
 - Mongodb
 
