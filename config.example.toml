@@ -14,6 +14,10 @@ secret = ""
 cf_apikey = ""
 account_id = ""
 
+[discord]
+username = ""
+webhook = ""
+
 [redis]
 hostname = ""
 port = 6379

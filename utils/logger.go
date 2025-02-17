@@ -32,6 +32,6 @@ func Warn(input string) {
 func Error(input string, panic bool) {
 	Format(input, "\033[38;2;219;60;66m")
 	if panic {
-		os.Exit(0)
+		//	os.Exit(0)
 	}
 }

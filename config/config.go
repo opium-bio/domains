@@ -8,6 +8,7 @@ type Config struct {
 	App        App        `toml:"app"`
 	Statuses   []string   `toml:"statuses"`
 	JWT        JWT        `toml:"JWT"`
+	Discord    Discord    `toml:"discord"`
 	Cloudflare Cloudflare `toml:"cloudflare"`
 	Redis      Redis      `toml:"redis"`
 	MongoDB    MongoDB    `toml:"mongodb"`
@@ -17,6 +18,10 @@ type App struct {
 }
 type JWT struct {
 	Secret string `toml:"secret"`
+}
+type Discord struct {
+	Username string `toml:"username"`
+	Webhook  string `toml:"webhook"`
 }
 type Cloudflare struct {
 	CFApiKey  string `toml:"cf_apikey"`
