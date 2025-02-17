@@ -33,6 +33,7 @@ type User struct {
 func ptr(s string) *string {
 	return &s
 }
+
 func sendDiscordError(cfg *config.Config, message string) {
 	webhookURL := cfg.Discord.Webhook
 	if webhookURL == "" {
@@ -64,14 +65,7 @@ func main() {
 		}
 	}()
 	collection := db.Database("prod").Collection("domains")
-	// Remove the unique index creation
-	// _, err = collection.Indexes().CreateOne(context.Background(), mongo.IndexModel{
-	// 	Keys:    bson.D{{Key: "domain", Value: 1}},
-	// 	Options: options.Index().SetUnique(true),
-	// })
-	// if err != nil {
-	// 	log.Fatal("Failed to create MongoDB index:", err)
-	// }
+
 	lib.CloudFlare()
 	defer func() {
 		if err := recover(); err != nil {
@@ -79,21 +73,13 @@ func main() {
 			sendDiscordError(cfg, fmt.Sprintf("Unexpected error: %v", err))
 		}
 	}()
-	redis := lib.Redis()
-	if redis == nil {
-		log.Fatal("Failed to connect to Redis")
-	}
-	defer func() {
-		if err := redis.Close(); err != nil {
-			log.Println("Error disconnecting Redis:", err)
-		}
-	}()
+
 	app := fiber.New()
 	v1 := app.Group("/v1")
 	v1.Post("/add", middleware.JWTAuth(db, cfg.JWT.Secret), func(c *fiber.Ctx) error {
 		user := c.Locals("user").(middleware.User)
 		domain := new(Domain)
-		//I forgot to add this earlier but ccheck if the user has premium
+		
 		var Usr User
 		collection := db.Database("prod").Collection("users")
 		err := collection.FindOne(context.Background(), bson.M{"_id": user.ID}).Decode(&Usr)
@@ -131,14 +117,6 @@ func main() {
 			})
 		}
 
-		err = redis.Set(context.Background(), "domain:"+domain.Domain, domain.Domain, 0).Err()
-		if err != nil {
-			sendDiscordError(cfg, fmt.Sprintf("Redis error: %v", err))
-			return c.JSON(fiber.Map{
-				"success": false,
-				"message": "Failed to save to Redis",
-			})
-		}
 		newDomain := FindDomains{
 			Domain:    domain.Domain,
 			Donated:   false,
@@ -188,7 +166,7 @@ func main() {
 				"message": "Domain cannot be empty",
 			})
 		}
-		var domainthing /* (I need better names) */ FindDomains
+		var domainthing FindDomains
 		err := collection.FindOne(context.TODO(), bson.M{"domain": domain}).Decode(&domainthing)
 		if err != nil {
 			return c.JSON(fiber.Map{
@@ -266,6 +244,6 @@ func main() {
 			"domains": domains,
 		})
 	})
-	//I'll let somebody figure out a delete endpoint
+
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", cfg.App.Port)))
 }
