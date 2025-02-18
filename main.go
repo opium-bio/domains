@@ -198,6 +198,33 @@ func main() {
 			"message": domainthing.Status,
 		})
 	})
+	v1.Get("/my-domains", middleware.JWTAuth(db, cfg.JWT.Secret), func(c *fiber.Ctx) error {
+		user := c.Locals("user").(middleware.User)
+		var domains []FindDomains
+		cursor, err := collection.Find(context.TODO(), bson.M{"addedby": user.ID.Hex()})
+		if err != nil {
+			return c.JSON(fiber.Map{
+				"success": false,
+				"message": "Failed to fetch domains from the database",
+			})
+		}
+		defer cursor.Close(context.TODO())
+		for cursor.Next(context.TODO()) {
+			var domain FindDomains
+			if err := cursor.Decode(&domain); err != nil {
+				return c.JSON(fiber.Map{
+					"success": false,
+					"message": "Failed to decode domain",
+				})
+			}
+			domains = append(domains, domain)
+		}
+
+		return c.JSON(fiber.Map{
+			"success": true,
+			"domains": domains,
+		})
+	})
 	v1.Get("/domains", func(c *fiber.Ctx) error {
 		var domains []FindDomains
 		cursor, err := collection.Find(context.TODO(), bson.M{})
