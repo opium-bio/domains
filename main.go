@@ -198,7 +198,7 @@ func main() {
 			"message": domainthing.Status,
 		})
 	})
-	v1.Get("/my-domains", middleware.JWTAuth(db, cfg.JWT.Secret), func(c *fiber.Ctx) error {
+	v1.Get("/mydomains", middleware.JWTAuth(db, cfg.JWT.Secret), func(c *fiber.Ctx) error {
 		user := c.Locals("user").(middleware.User)
 		var domains []FindDomains
 		cursor, err := collection.Find(context.TODO(), bson.M{"addedby": user.ID.Hex()})
